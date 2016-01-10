@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html ng-app="lovematch">
+<head>
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.4/angular.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="lovematch.js"></script>
+    <style>
+        .row {
+            margin: 20px 0px 8px 0px;
+        }
+    </style>
+</head>
+<body ng-controller="LoveMatchCtrl">
+<div class="container">
+    <h1>Lovematch!!!</h1>
+
+    <hr/>
+
+    <!-- Name row -->
+    <div class="row">
+        <div class="col-md-4">
+            Lover's Names:
+        </div>
+        <div class="col-md-4">
+            <input class="form-control" type="text" ng-model="player1.name">
+        </div>
+        <div class="col-md-4">
+            <input class="form-control" type="text" ng-model="player2.name">
+        </div>
+    </div>
+
+    <!-- Debug row -->
+    <!--
+        <div class="row">
+            <div class="col-md-4">
+                Objects:
+            </div>
+            <div class="col-md-4">
+                <pre>{{player1 || json}}</pre>
+            </div>
+            <div class="col-md-4">
+                <pre>{{player2 || json}}</pre>
+            </div>
+        </div>
+    -->
+
+    <div class="row">
+        <div class="col-md-4">
+            Favourite Colour:
+        </div>
+        <div class="col-md-4">
+            <select class="form-control" ng-model="player1.colour"
+                    ng-options="idx as colour for (idx, colour) in colours"></select>
+        </div>
+        <div class="col-md-4">
+            <select class="form-control" ng-model="player2.colour"
+                    ng-options="idx as colour for (idx, colour) in colours"></select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            Personality:
+        </div>
+        <div class="col-md-4">
+            <select class="form-control" ng-model="player1.pzn"
+                    ng-options="idx as pzn for (idx, pzn) in personalities"></select>
+        </div>
+        <div class="col-md-4">
+            <select class="form-control" ng-model="player2.pzn"
+                    ng-options="idx as pzn for (idx, pzn) in personalities"></select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            Favourite Sport:
+        </div>
+        <div class="col-md-4">
+            <select class="form-control" ng-model="player1.sport"
+                    ng-options="idx as sport for (idx, sport) in sports"></select>
+        </div>
+        <div class="col-md-4">
+            <select class="form-control" ng-model="player2.sport"
+                    ng-options="idx as sport for (idx, sport) in sports"></select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            General Questions:
+        </div>
+        <div class="col-md-8">
+            <div class="row" ng-repeat="question in questions">
+                <div class="col-md-6">{{question.question}}</div>
+                <div class="col-md-6">
+                    <select class="form-control" ng-model="general[$index]"
+                            ng-options="answer.score as answer.answer for answer in question.answers"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <input type="button" ng-click="calculateAll()" class="btn btn-lg" value="Calculate!!">
+        </div>
+        <div ng-show="average" class="col-md-8">
+            <div style="font-size: 2em">
+                Score: {{average}}!!
+            </div>
+            <div class="btn btn-info" ng-hide="showCalcs" ng-click="showCalcs=true">Show Calculation...</div>
+            <div ng-show="showCalcs">
+                Colour score: {{colourScore}}<br/>
+                Personality score: {{personalityScore}}<br/>
+                Sport score: {{sportScore}}<br/>
+                    <span ng-repeat="q in questions">
+                        {{q.question}}: {{gscores[$index]}}<br/>
+                    </span>
+            </div>
+        </div>
+    </div>
+    <!--
+    -->
+</div>
+</body>
+</html>
